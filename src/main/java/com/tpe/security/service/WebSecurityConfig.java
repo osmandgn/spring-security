@@ -16,5 +16,19 @@ import org.springframework.security.crypto.password.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().
+                authorizeHttpRequests().
+                antMatchers("/","index.html","/css/*","/js/*").permitAll().
+                anyRequest().
+                authenticated().
+                and().
+                httpBasic();  // Basic Auth
+    }
+
 
 }
