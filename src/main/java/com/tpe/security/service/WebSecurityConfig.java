@@ -30,5 +30,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 httpBasic();  // Basic Auth
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(10);
+
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider(){
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+
+    }
+
 
 }
