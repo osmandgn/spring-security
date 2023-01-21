@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -23,7 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
                 authorizeHttpRequests().
-                antMatchers("/","index.html","/css/*","/js/*").permitAll().
+                antMatchers("/","index.html","/css/*","/js/*","/register").permitAll().
+                and().
+                authorizeRequests().antMatchers("/students/**").hasRole("ADMIN").
                 anyRequest().
                 authenticated().
                 and().
@@ -49,7 +51,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
     }
-
-
-
 }

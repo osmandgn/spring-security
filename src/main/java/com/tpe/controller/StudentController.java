@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class StudentController {
 
     // !!! Bütün öğrenciler gelsin
     @GetMapping // http://localhost:8080/students + GET
+    //@PreAuthorize("hasRole('ADMIN')") // HasRole den dolayı ROLE_ADMIN yazmamıza gerek kalmadı.
     public ResponseEntity<List<Student>> getAll(){
         List<Student> students = studentService.getAll();
 
